@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    let engineImage = CIImage(image: UIImage(named: "engine.jpg")!)!
+    let engineImage = CIImage(image:
+        UIImage(named: "engine.jpg")!)!
     
     let mainImageView = UIImageView()
     let histogramView = ImageView()
@@ -68,13 +69,16 @@ class ViewController: UIViewController
     
     let shapeLayer = CAShapeLayer()
 
-    var sampleRect = CGRect(x: 200, y: 200, width: 240, height: 240)
+    var sampleRect = CGRect(x: 200,
+        y: 200,
+        width: 240,
+        height: 240)
     
     let ciContext = CIContext()
     let colorSpace = CGColorSpaceCreateDeviceRGB()
-    
-    let totalBytes = 8 // Bytes requires to hold 1x1 image returned from Area Average filter
-    let bitmap = calloc(8, sizeof(UInt8))
+
+    let totalBytes = 4 // Bytes requires to hold 1x1 image returned from Area Average filter
+    let bitmap = calloc(4, sizeof(UInt8))
     
     override func viewDidLoad()
     {
@@ -160,9 +164,12 @@ class ViewController: UIViewController
     /// Updates the color swatch and RGB progress bars
     func updateColorInformation(sampleExtent: CIVector)
     {
-        let averageImage = CIFilter(name: "CIAreaAverage", withInputParameters: [
-            kCIInputImageKey: engineImage,
-            kCIInputExtentKey: sampleExtent])!.outputImage!
+        let averageImageFilter = CIFilter(name: "CIAreaAverage",
+            withInputParameters: [
+                kCIInputImageKey: engineImage,
+                kCIInputExtentKey: sampleExtent])!
+
+        let averageImage = averageImageFilter.outputImage!
 
         ciContext.render(averageImage,
             toBitmap: bitmap,

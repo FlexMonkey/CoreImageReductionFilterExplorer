@@ -49,7 +49,7 @@ class ImageView: GLKView
     
     /// The image to display
     var image: CIImage?
-        {
+    {
         didSet
         {
             setNeedsDisplay()
