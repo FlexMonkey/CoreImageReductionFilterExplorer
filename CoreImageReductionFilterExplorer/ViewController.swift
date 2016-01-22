@@ -10,6 +10,9 @@ import UIKit
 
 class ViewController: UIViewController
 {
+    let imageSide = CGFloat(640)
+    let widgetsHeight = CGFloat(100)
+    
     let engineImage = CIImage(image:
         UIImage(named: "engine.jpg")!)!
     
@@ -134,7 +137,7 @@ class ViewController: UIViewController
     {
         drawSampleRect()
         
-        let sampleExtent = CIVector(CGRect: sampleRect.upsideDown(640))
+        let sampleExtent = CIVector(CGRect: sampleRect.upsideDown(imageSide))
         
         updateColorInformation(sampleExtent)
         
@@ -210,16 +213,16 @@ class ViewController: UIViewController
     
     override func viewDidLayoutSubviews()
     {
-        mainStackView.frame = view.bounds.insetBy(dx: 0, dy: 100)
+        mainStackView.frame = view.bounds.insetBy(dx: 0, dy: widgetsHeight)
 
-        mainImageView.widthAnchor.constraintEqualToConstant(640).active = true
-        mainImageView.heightAnchor.constraintEqualToConstant(640).active = true
+        mainImageView.widthAnchor.constraintEqualToConstant(imageSide).active = true
+        mainImageView.heightAnchor.constraintEqualToConstant(imageSide).active = true
         
-        bottomStackView.heightAnchor.constraintEqualToConstant(100).active = true
-        bottomStackView.widthAnchor.constraintEqualToConstant(640).active = true
+        bottomStackView.heightAnchor.constraintEqualToConstant(widgetsHeight).active = true
+        bottomStackView.widthAnchor.constraintEqualToConstant(imageSide).active = true
         
-        histogramView.widthAnchor.constraintEqualToConstant(100).active = true
-        swatch.widthAnchor.constraintEqualToConstant(100).active = true
+        histogramView.widthAnchor.constraintEqualToConstant(widgetsHeight).active = true
+        swatch.widthAnchor.constraintEqualToConstant(widgetsHeight).active = true
 
         progressStackView.spacing = 10
         bottomStackView.spacing = 10
