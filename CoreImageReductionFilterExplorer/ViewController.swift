@@ -204,9 +204,10 @@ class ViewController: UIViewController
     {
         let histogramImage = engineImage.imageByApplyingFilter("CIAreaHistogram", withInputParameters: [
                 kCIInputExtentKey: sampleExtent,
-                kCIInputScaleKey: 10,
+                kCIInputScaleKey: 25,
                 "inputCount" : 100])
-            .imageByApplyingFilter("CIHistogramDisplayFilter", withInputParameters: nil)
+            .imageByApplyingFilter("CIHistogramDisplayFilter", withInputParameters: [
+                "inputHeight": widgetsHeight])
         
         histogramView.image = histogramImage
     }
