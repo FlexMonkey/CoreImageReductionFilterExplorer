@@ -12,6 +12,10 @@
 		3EA20DAF1C51E89D00D5732F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DAD1C51E89D00D5732F /* Main.storyboard */; };
 		3EA20DB11C51E89D00D5732F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DB01C51E89D00D5732F /* Assets.xcassets */; };
 		3EA20DB41C51E89D00D5732F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DB21C51E89D00D5732F /* LaunchScreen.storyboard */; };
+		3EA20DBD1C51EA8500D5732F /* lisbon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DBC1C51EA8500D5732F /* lisbon.jpg */; };
+		3EA20DBF1C520D2700D5732F /* colors.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DBE1C520D2700D5732F /* colors.png */; };
+		3EA20DC11C52153A00D5732F /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA20DC01C52153A00D5732F /* ImageView.swift */; };
+		3EA20DC31C52225D00D5732F /* engine.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EA20DC21C52225D00D5732F /* engine.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		3EA20DB01C51E89D00D5732F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EA20DB31C51E89D00D5732F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EA20DB51C51E89D00D5732F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EA20DBC1C51EA8500D5732F /* lisbon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lisbon.jpg; path = assets/lisbon.jpg; sourceTree = "<group>"; };
+		3EA20DBE1C520D2700D5732F /* colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = colors.png; path = assets/colors.png; sourceTree = "<group>"; };
+		3EA20DC01C52153A00D5732F /* ImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageView.swift; path = components/ImageView.swift; sourceTree = "<group>"; };
+		3EA20DC21C52225D00D5732F /* engine.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = engine.jpg; path = assets/engine.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,26 @@
 		3EA20DA81C51E89D00D5732F /* CoreImageReductionFilterExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				3EA20DBB1C51EA7100D5732F /* assets */,
 				3EA20DA91C51E89D00D5732F /* AppDelegate.swift */,
 				3EA20DAB1C51E89D00D5732F /* ViewController.swift */,
 				3EA20DAD1C51E89D00D5732F /* Main.storyboard */,
 				3EA20DB01C51E89D00D5732F /* Assets.xcassets */,
 				3EA20DB21C51E89D00D5732F /* LaunchScreen.storyboard */,
 				3EA20DB51C51E89D00D5732F /* Info.plist */,
+				3EA20DC01C52153A00D5732F /* ImageView.swift */,
 			);
 			path = CoreImageReductionFilterExplorer;
+			sourceTree = "<group>";
+		};
+		3EA20DBB1C51EA7100D5732F /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				3EA20DC21C52225D00D5732F /* engine.jpg */,
+				3EA20DBE1C520D2700D5732F /* colors.png */,
+				3EA20DBC1C51EA8500D5732F /* lisbon.jpg */,
+			);
+			name = assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,9 +142,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA20DBF1C520D2700D5732F /* colors.png in Resources */,
+				3EA20DBD1C51EA8500D5732F /* lisbon.jpg in Resources */,
 				3EA20DB41C51E89D00D5732F /* LaunchScreen.storyboard in Resources */,
 				3EA20DB11C51E89D00D5732F /* Assets.xcassets in Resources */,
 				3EA20DAF1C51E89D00D5732F /* Main.storyboard in Resources */,
+				3EA20DC31C52225D00D5732F /* engine.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA20DC11C52153A00D5732F /* ImageView.swift in Sources */,
 				3EA20DAC1C51E89D00D5732F /* ViewController.swift in Sources */,
 				3EA20DAA1C51E89D00D5732F /* AppDelegate.swift in Sources */,
 			);
