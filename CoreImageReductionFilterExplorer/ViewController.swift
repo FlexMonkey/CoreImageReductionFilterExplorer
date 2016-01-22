@@ -79,7 +79,7 @@ class ViewController: UIViewController
 
     let totalBytes = 4 // Bytes requires to hold 1x1 image returned from Area Average filter
     let bitmap = calloc(4, sizeof(UInt8))
-    
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -178,11 +178,9 @@ class ViewController: UIViewController
             format: kCIFormatRGBA8,
             colorSpace: colorSpace)
         
-        let bytes = UnsafeBufferPointer<UInt8>(start: UnsafePointer<UInt8>(bitmap),
+        let rgba = UnsafeBufferPointer<UInt8>(
+            start: UnsafePointer<UInt8>(bitmap),
             count: totalBytes)
-
-        let rgba = UnsafeBufferPointer(start: bytes.baseAddress,
-            count: bytes.count)
 
         let red = Float(rgba[0]) / 255
         let green = Float(rgba[1]) / 255
