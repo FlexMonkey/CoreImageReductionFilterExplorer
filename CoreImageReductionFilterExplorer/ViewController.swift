@@ -202,12 +202,15 @@ class ViewController: UIViewController
     /// Updates the histogram
     func updateHistogram(sampleExtent: CIVector)
     {
-        let histogramImage = engineImage.imageByApplyingFilter("CIAreaHistogram", withInputParameters: [
-                kCIInputExtentKey: sampleExtent,
-                kCIInputScaleKey: 25,
-                "inputCount" : 100])
-            .imageByApplyingFilter("CIHistogramDisplayFilter", withInputParameters: [
-                "inputHeight": widgetsHeight])
+        let histogramImage = engineImage
+            .imageByApplyingFilter("CIAreaHistogram",
+                withInputParameters: [
+                    kCIInputExtentKey: sampleExtent,
+                    kCIInputScaleKey: 15,
+                    "inputCount" : 100])
+            .imageByApplyingFilter("CIHistogramDisplayFilter",
+                withInputParameters: [
+                    "inputHeight": widgetsHeight])
         
         histogramView.image = histogramImage
     }
