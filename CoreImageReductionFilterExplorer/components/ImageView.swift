@@ -19,13 +19,13 @@ import UIKit
 
 class ImageView: GLKView
 {
-    let eaglContext = EAGLContext(API: .OpenGLES2)
+    let eaglContext = EAGLContext(api: .openGLES2)!
     
     lazy var ciContext: CIContext =
     {
         [unowned self] in
         
-        return CIContext(EAGLContext: self.eaglContext,
+        return CIContext(eaglContext: self.eaglContext,
             options: [kCIContextWorkingColorSpace: NSNull()])
         }()
     
@@ -59,7 +59,7 @@ class ImageView: GLKView
 
 extension ImageView: GLKViewDelegate
 {
-    func glkView(view: GLKView, drawInRect rect: CGRect)
+    func glkView(_ view: GLKView, drawIn rect: CGRect)
     {
         guard let image = image else
         {
@@ -67,31 +67,31 @@ extension ImageView: GLKViewDelegate
         }
         
         let targetRect = image.extent.aspectFitInRect(
-            target: CGRect(origin: CGPointZero,
+            target: CGRect(origin: .zero,
                 size: CGSize(width: drawableWidth,
                     height: drawableHeight)))
         
-        let ciBackgroundColor = CIColor(color: backgroundColor ?? UIColor.whiteColor())
+        let ciBackgroundColor = CIColor(color: backgroundColor ?? UIColor.white)
         
-        ciContext.drawImage(CIImage(color: ciBackgroundColor),
-            inRect: CGRect(x: 0,
-                y: 0,
-                width: drawableWidth,
-                height: drawableHeight),
-            fromRect: CGRect(x: 0,
+        ciContext.draw(CIImage(color: ciBackgroundColor),
+                       in: CGRect(x: 0,
+                                  y: 0,
+                                  width: drawableWidth,
+                                  height: drawableHeight),
+                       from: CGRect(x: 0,
                 y: 0,
                 width: drawableWidth,
                 height: drawableHeight))
         
-        ciContext.drawImage(image,
-            inRect: targetRect,
-            fromRect: image.extent)
+        ciContext.draw(image,
+                       in: targetRect,
+                       from: image.extent)
     }
 }
 
 extension CGRect
 {
-    func aspectFitInRect(target target: CGRect) -> CGRect
+    func aspectFitInRect(target: CGRect) -> CGRect
     {
         let scale: CGFloat =
         {

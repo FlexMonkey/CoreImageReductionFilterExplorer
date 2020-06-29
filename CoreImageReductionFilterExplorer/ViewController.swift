@@ -28,9 +28,9 @@ class ViewController: UIViewController
             self.mainImageView,
             self.bottomStackView])
         
-        stackView.distribution = .EqualSpacing
-        stackView.axis = .Vertical
-        stackView.alignment = .Center
+        stackView.distribution = .equalSpacing
+        stackView.axis = .vertical
+        stackView.alignment = .center
         
         return stackView
     }()
@@ -44,8 +44,8 @@ class ViewController: UIViewController
             self.greenProgress,
             self.blueProgress])
         
-        stackView.distribution = .FillEqually
-        stackView.axis = .Vertical
+        stackView.distribution = .fillEqually
+        stackView.axis = .vertical
         
         return stackView
     }()
@@ -59,16 +59,16 @@ class ViewController: UIViewController
             self.swatch,
             self.progressStackView])
         
-        stackView.distribution = .Fill
-        stackView.axis = .Horizontal
-        stackView.alignment = .Fill
+        stackView.distribution = .fill
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
         
         return stackView
     }()
     
-    let redProgress = UIProgressView(progressViewStyle: .Default)
-    let greenProgress = UIProgressView(progressViewStyle: .Default)
-    let blueProgress = UIProgressView(progressViewStyle: .Default)
+    let redProgress = UIProgressView(progressViewStyle: .default)
+    let greenProgress = UIProgressView(progressViewStyle: .default)
+    let blueProgress = UIProgressView(progressViewStyle: .default)
     
     let shapeLayer = CAShapeLayer()
 
@@ -81,7 +81,7 @@ class ViewController: UIViewController
     let colorSpace = CGColorSpaceCreateDeviceRGB()
 
     let totalBytes = 4 // Bytes requires to hold 1x1 image returned from Area Average filter
-    let bitmap = calloc(4, sizeof(UInt8))
+    let bitmap = calloc(4, MemoryLayout<UInt8>.size)!
 
     override func viewDidLoad()
     {
@@ -89,44 +89,43 @@ class ViewController: UIViewController
    
         view.addSubview(mainStackView)
         
-        redProgress.tintColor = UIColor.redColor()
-        greenProgress.tintColor = UIColor.greenColor()
-        blueProgress.tintColor = UIColor.blueColor()
+        redProgress.tintColor = UIColor.red
+        greenProgress.tintColor = UIColor.green
+        blueProgress.tintColor = UIColor.blue
         
         mainImageView.layer.addSublayer(shapeLayer)
         
         shapeLayer.fillColor = nil
-        shapeLayer.strokeColor = UIColor.blackColor().CGColor
+        shapeLayer.strokeColor = UIColor.black.cgColor
         shapeLayer.lineWidth = 4
         
-        shapeLayer.shadowColor = UIColor.whiteColor().CGColor
+        shapeLayer.shadowColor = UIColor.white.cgColor
         shapeLayer.shadowOffset = CGSize(width: 0, height: 0)
         shapeLayer.shadowOpacity = 1
         shapeLayer.shadowRadius = 3
         
-        mainImageView.image = UIImage(CIImage: engineImage)
-        
+        mainImageView.image = UIImage(ciImage: engineImage)
         update()
     }
 
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         guard let touch = touches.first  else
         {
             return
         }
         
-        let touchLocation = touch.locationInView(mainImageView)
+        let touchLocation = touch.location(in: mainImageView)
         
         let nearestCorner = sampleRect.corners.reduce(CGPoint(x: -1, y: -1))
         {
-            $1.distanceTo(touchLocation) < $0.distanceTo(touchLocation) && $1.distanceTo(touchLocation) < 50 ? $1 : $0
+            $1.distanceTo(point: touchLocation) < $0.distanceTo(point: touchLocation) && $1.distanceTo(point: touchLocation) < 50 ? $1 : $0
         }
         
-        if let touchedCorderIndex = sampleRect.corners.indexOf(nearestCorner)
+        if let touchedCorderIndex = sampleRect.corners.index(of: nearestCorner)
         {
-            sampleRect.setCornerAtIndex(touchedCorderIndex,
+            sampleRect.setCornerAtIndex(index: touchedCorderIndex,
                 position: touchLocation)
             
             update()
@@ -137,11 +136,11 @@ class ViewController: UIViewController
     {
         drawSampleRect()
         
-        let sampleExtent = CIVector(CGRect: sampleRect.upsideDown(imageSide))
+        let sampleExtent = CIVector(cgRect: sampleRect.upsideDown(boundsHeight: imageSide))
         
-        updateColorInformation(sampleExtent)
+        updateColorInformation(sampleExtent: sampleExtent)
         
-        updateHistogram(sampleExtent)
+        updateHistogram(sampleExtent: sampleExtent)
     }
     
     /// Draws a rectangle over the main image representing the sample area
@@ -156,12 +155,12 @@ class ViewController: UIViewController
                 width: 8,
                 height: 8).offsetBy(dx: -4, dy: -4)
             
-            let handle = UIBezierPath(ovalInRect: handleRect)
+            let handle = UIBezierPath(ovalIn: handleRect)
             
-            bezierCurve.appendPath(handle)
+            bezierCurve.append(handle)
         }
         
-        shapeLayer.path = bezierCurve.CGPath
+        shapeLayer.path = bezierCurve.cgPath
     }
     
     /// Updates the color swatch and RGB progress bars
@@ -182,7 +181,7 @@ class ViewController: UIViewController
             colorSpace: colorSpace)
         
         let rgba = UnsafeBufferPointer<UInt8>(
-            start: UnsafePointer<UInt8>(bitmap),
+            start: UnsafePointer<UInt8>(bitmap.assumingMemoryBound(to: UInt8.self)),
             count: totalBytes)
 
         let red = Float(rgba[0]) / 255
@@ -203,13 +202,13 @@ class ViewController: UIViewController
     func updateHistogram(sampleExtent: CIVector)
     {
         let histogramImage = engineImage
-            .imageByApplyingFilter("CIAreaHistogram",
-                withInputParameters: [
+            .applyingFilter("CIAreaHistogram",
+                            parameters: [
                     kCIInputExtentKey: sampleExtent,
                     kCIInputScaleKey: 15,
                     "inputCount" : 100])
-            .imageByApplyingFilter("CIHistogramDisplayFilter",
-                withInputParameters: [
+            .applyingFilter("CIHistogramDisplayFilter",
+                            parameters: [
                     "inputHeight": widgetsHeight])
         
         histogramView.image = histogramImage
@@ -219,14 +218,14 @@ class ViewController: UIViewController
     {
         mainStackView.frame = view.bounds.insetBy(dx: 0, dy: widgetsHeight)
 
-        mainImageView.widthAnchor.constraintEqualToConstant(imageSide).active = true
-        mainImageView.heightAnchor.constraintEqualToConstant(imageSide).active = true
+        mainImageView.widthAnchor.constraint(equalToConstant: imageSide).isActive = true
+        mainImageView.heightAnchor.constraint(equalToConstant: imageSide).isActive = true
         
-        bottomStackView.heightAnchor.constraintEqualToConstant(widgetsHeight).active = true
-        bottomStackView.widthAnchor.constraintEqualToConstant(imageSide).active = true
+        bottomStackView.heightAnchor.constraint(equalToConstant: widgetsHeight).isActive = true
+        bottomStackView.widthAnchor.constraint(equalToConstant: imageSide).isActive = true
         
-        histogramView.widthAnchor.constraintEqualToConstant(widgetsHeight).active = true
-        swatch.widthAnchor.constraintEqualToConstant(widgetsHeight).active = true
+        histogramView.widthAnchor.constraint(equalToConstant: widgetsHeight).isActive = true
+        swatch.widthAnchor.constraint(equalToConstant: widgetsHeight).isActive = true
 
         progressStackView.spacing = 10
         bottomStackView.spacing = 10
