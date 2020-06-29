@@ -111,6 +111,7 @@
 					3EA20DA51C51E89D00D5732F = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = QPFFKMSR5R;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -296,7 +297,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.flexmonkey.CoreImageReductionFilterExplorer.mc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -309,7 +310,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = uk.co.flexmonkey.CoreImageReductionFilterExplorer.mc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

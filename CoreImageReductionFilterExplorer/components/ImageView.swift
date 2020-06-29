@@ -26,7 +26,7 @@ class ImageView: GLKView
         [unowned self] in
         
         return CIContext(eaglContext: self.eaglContext,
-            options: [kCIContextWorkingColorSpace: NSNull()])
+            options: convertToOptionalCIContextOptionDictionary([convertFromCIContextOption(CIContextOption.workingColorSpace): NSNull()]))
         }()
     
     override init(frame: CGRect)
@@ -112,4 +112,15 @@ extension CGRect
             width: width,
             height: height)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalCIContextOptionDictionary(_ input: [String: Any]?) -> [CIContextOption: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (CIContextOption(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCIContextOption(_ input: CIContextOption) -> String {
+	return input.rawValue
 }

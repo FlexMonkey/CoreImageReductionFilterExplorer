@@ -123,7 +123,7 @@ class ViewController: UIViewController
             $1.distanceTo(point: touchLocation) < $0.distanceTo(point: touchLocation) && $1.distanceTo(point: touchLocation) < 50 ? $1 : $0
         }
         
-        if let touchedCorderIndex = sampleRect.corners.index(of: nearestCorner)
+        if let touchedCorderIndex = sampleRect.corners.firstIndex(of: nearestCorner)
         {
             sampleRect.setCornerAtIndex(index: touchedCorderIndex,
                 position: touchLocation)
@@ -167,7 +167,7 @@ class ViewController: UIViewController
     func updateColorInformation(sampleExtent: CIVector)
     {
         let averageImageFilter = CIFilter(name: "CIAreaAverage",
-            withInputParameters: [
+            parameters: [
                 kCIInputImageKey: engineImage,
                 kCIInputExtentKey: sampleExtent])!
 
@@ -177,7 +177,7 @@ class ViewController: UIViewController
             toBitmap: bitmap,
             rowBytes: totalBytes,
             bounds: averageImage.extent,
-            format: kCIFormatRGBA8,
+            format: CIFormat.RGBA8,
             colorSpace: colorSpace)
         
         let rgba = UnsafeBufferPointer<UInt8>(
